@@ -5,7 +5,7 @@ import SearchBar from './Components/search_bar';
 import VideoList from './Components/video_list';
 import VideoDetail from './Components/video_detail';
 
-const API_KEY = 'AIzaSyBFt3nUIA_cT_Ya68hp7_EgVN3Z0bcHqaM';
+const API_KEY = 'AIzaSyCTyH6t082Wq_XdrJolf8Udi5lZQGU3evM';
 
 // Create new component that produces some html
 class App extends Component 
@@ -18,22 +18,26 @@ class App extends Component
             selectedVideo: null
         };
 
+        this.videoSearch('kite');
+    }
+
+    videoSearch(term)
+    {
         // Fetch Data from YT
         YTSearch(
-            {key: API_KEY, term: 'surfboards'},
+            {key: API_KEY, term: term},
             (videos) => {
                 this.setState({
                     videos: videos,
                     selectedVideo: videos[0]
                 });
-                }
-            );
+            });
     }
 
     render() { 
         return (
             <div> 
-                <SearchBar />
+                <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
                 <VideoDetail video={this.state.selectedVideo}/>
                 <VideoList 
                     onVideoSelect={selectedVideo => this.setState({selectedVideo})}
